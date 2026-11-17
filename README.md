@@ -41,6 +41,7 @@ One sentence in, a polished, notarized, auto-updating Mac app out.
 | 自动更新 | Sparkle 2，EdDSA 签名，GitHub Release 托管 appcast，后台检查只轻提示、不打断 |
 | 发布 | Developer ID 签名、通用二进制、Apple 公证、带背景图的 DMG、`install-local.sh` 一键替换本机版本 |
 | GitHub | **默认私有仓库**，问过你才公开；产品页式 README（讲痛点、讲价值、配图）、PR 流程、Release |
+| Tauri 应用 | `references/tauri.md`：WKWebView 的坑（`confirm` 静默失败、整 store 订阅丢点击）、Mac 公证脚本陷阱、tauri updater、Windows/Linux CI、固定「最新版」下载链接与官网部署（来自 SubCast 0.2.0 实战） |
 | 经验库 | 30+ 条真实踩坑（焦点、⌘ 快捷键、输入法、TCC 权限、微信图片、actool、DMG……）和一份交付前细节清单 |
 
 <table>
@@ -77,6 +78,7 @@ npx skills add joeseesun/qiaomu-macos-dev
 - 「给这个 Mac app 加一个设置页和关于页，带检查更新」
 - 「设计一个 app 图标」「打包成公证过的 DMG」「发布到 GitHub，先私有」
 - 「为什么我的菜单栏 app 里 ⌘V 不能粘贴？」
+- 「这个 Tauri 应用要在 Mac 上公证，还要自动更新和 Windows/Linux 版本」
 
 ## 工作方式
 
@@ -99,7 +101,7 @@ cd ~/Code/qiaomu-ledger && ./scripts/sparkle-key.sh && ./build.sh && build/Ledge
 
 ```
 SKILL.md                  路由 + 一句话开发流程 + 不可妥协的规则
-references/               one-shot 流程、模板、架构、界面、设置与关于、图标、权限、自动更新、发布、GitHub、踩坑、细节清单
+references/               one-shot 流程、模板、架构、界面、设置与关于、图标、权限、自动更新、发布、GitHub、踩坑、细节清单、Tauri
 scripts/new_app.py        生成器
 assets/template/          App 模板（Swift 源码、build/release/install 脚本、DMG 背景、Sparkle 密钥脚本）
 evals/ reports/ tests/    触发评估、Skill IR、生成器单元测试

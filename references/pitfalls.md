@@ -56,11 +56,15 @@ Symptom → cause → fix. Each one happened while building Jot or this template
 | Notarization: missing secure timestamp | Debug build signed with `--timestamp=none` | `RELEASE=1` build |
 | Sparkle update fails signature check | DMG signed with sign_update before stapling | Staple first, then `sign_update` |
 | App shows English name in Chinese Finder | Missing localized display name | `LSHasLocalizedDisplayName`, `CFBundleLocalizations`, `zh-Hans.lproj/InfoPlist.strings`; bundle filename = `CFBundleName` |
+| "<App> quit unexpectedly" in dev, report says `SIGKILL (Code Signature Invalid)`, crash frames look random | A build script `cp`s over the binary of a copy that is still running: same inode, so pages fault in against a stale signature | Never write into a bundle in place: build in a staging folder, then `mv` old away and new in (or `rm -rf` the bundle first, as the template does). Test: launch, rebuild, process survives, no new `.ips` |
+| A button in an `HStack` shows an icon only, or its count capsule is empty | A sibling text with higher `layoutPriority` takes the room; the button's text is compressed to zero width | `.fixedSize()` on buttons, let the status text truncate; snapshot the busiest state at the minimum window width |
 | `sparkle-key.sh` fails on a fresh checkout | SwiftPM artifact cache race | Resolve with one retry (template does) |
 
 ## Shell (zsh on macOS)
 
 - No `timeout` command on macOS; use `perl -e 'alarm N; exec @ARGV'` or background + kill.
+- `cmd | tee | grep -q X` under `set -o pipefail` exits 141 (SIGPIPE) when grep matches early, aborting a release whose notarization already passed. Capture to a variable, print it, then `grep -q X <<<"$out"`.
 - Never name a zsh variable `path` (it's tied to `$PATH`).
 - `sed -i ''` on macOS (BSD sed), not `sed -i`.
 - Folder names with spaces (`Nutstore Files`): always quote.
+- Permission toggle "won't stick" after moving an app from ad-hoc to Developer ID signing: the old TCC row stores a `cdhash` requirement, so every rebuild fails it and toggling the row never helps. Diagnose: `sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db" "select hex(csreq) from access where client='<bundle id>' and service='kTCCServiceScreenCapture'" | xxd -r -p > r.csreq; csreq -r r.csreq -t`. A `cdhash H"…"` result is stale; `tccutil reset ScreenCapture <bundle id>` (and Accessibility), relaunch, grant once, and the new row stores `identifier … and certificate leaf[subject.OU] = <team>`, which survives rebuilds. Also check the app's own log: an enumerated window count of 0 means no Screen Recording grant.

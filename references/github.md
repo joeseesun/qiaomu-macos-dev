@@ -44,6 +44,8 @@ Writing rules: lead with the user's problem and outcome, short sentences, number
 - Issue templates are optional; at least make 反馈问题 in About open `issues/new`.
 - Secret scan before every push: `git grep -nE "BEGIN (EC|RSA|OPENSSH) PRIVATE|ghp_|sk-[A-Za-z0-9]{20}"` must be empty. Never commit the Sparkle private key, notary credentials, or `.env`.
 - Don't put the user's email or local paths in public files.
+- gitleaks may flag YouTube channel IDs (`UC…`, 24 chars) as generic API keys. Check the match by hand and allowlist that exact value; don't disable the rule.
+- Making a repo public: pick the license with the user first (AGPL-3.0 when they want to block closed commercial forks; MIT otherwise), set the `license` field in every manifest, enable private vulnerability reporting, add CONTRIBUTING and SECURITY. `gh repo view --json licenseInfo` can lag after adding LICENSE; check `gh api repos/<o>/<r>/license`.
 
 ## Releases
 

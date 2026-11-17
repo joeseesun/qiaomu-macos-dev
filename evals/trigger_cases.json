@@ -2,12 +2,12 @@
   "recommended_threshold": 0.5,
   "description_required_concepts": ["mac", "app", "build_action", "ship_feature"],
   "positive_concepts": {
-    "mac": ["macos", "mac", "菜单栏", "menu bar", "menubar", "swiftui", "appkit", "苹果电脑"],
+    "mac": ["macos", "mac", "菜单栏", "menu bar", "menubar", "swiftui", "appkit", "苹果电脑", "tauri"],
     "app": ["app", "apps", "应用", "软件", "小工具", "工具", "客户端"],
     "build_action": ["build", "develop", "开发", "做一个", "做个", "写一个", "加", "加上", "设计", "打包", "发布", "修", "debug", "调试", "为什么", "scaffold", "生成"],
     "ship_feature": ["自动更新", "auto update", "sparkle", "设置页", "设置", "关于", "about", "图标", "icon", "dmg", "公证", "notarize", "notarization", "快捷键", "hotkey", "权限", "tcc", "github", "粘贴", "签名", "安装包", "一句话"]
   },
-  "negative_patterns": ["ios", "iphone", "ipad", "watchos", "electron", "tauri", "浏览器扩展", "chrome 插件", "chrome extension", "obsidian 插件", "网页", "小程序", "安卓", "android", "pkg 安装包", "native messaging", "推荐几个", "有什么好用的"],
+  "negative_patterns": ["ios", "iphone", "ipad", "watchos", "electron", "浏览器扩展", "chrome 插件", "chrome extension", "obsidian 插件", "网页", "小程序", "安卓", "android", "pkg 安装包", "native messaging", "推荐几个", "有什么好用的"],
   "should_trigger": [
     {"text": "做一个 Mac 菜单栏小工具，按快捷键弹出输入框", "family": "cn_new_menubar"},
     {"text": "开发一个 macOS app 管理提示词，要好看还要自动更新", "family": "cn_new_window"},
@@ -18,7 +18,9 @@
     {"text": "我的菜单栏 app 里为什么 ⌘V 不能粘贴", "family": "cn_debug_focus"},
     {"text": "build a macOS menu bar app with Sparkle auto update", "family": "en_new"},
     {"text": "notarize my mac app and publish the DMG to GitHub", "family": "en_release"},
-    {"text": "Mac 软件每次重装都要重新给权限，帮我修", "family": "cn_debug_tcc"}
+    {"text": "Mac 软件每次重装都要重新给权限，帮我修", "family": "cn_debug_tcc"},
+    {"text": "Tauri 应用怎么在 Mac 上公证并做自动更新", "family": "cn_tauri_release"},
+    {"text": "我的 Tauri app 在 macOS 上点删除按钮没反应，confirm 弹不出来", "family": "cn_tauri_webview"}
   ],
   "should_not_trigger": [
     {"text": "做一个 iOS app 记账", "family": "ios"},

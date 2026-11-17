@@ -9,8 +9,8 @@
   ],
   "missing_description_concepts": [],
   "summary": {
-    "total": 20,
-    "passed": 20,
+    "total": 22,
+    "passed": 22,
     "false_positive": 0,
     "false_negative": 0,
     "pass_rate": 1.0
@@ -164,6 +164,33 @@
           "build_action",
           "mac",
           "ship_feature"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "Tauri 应用怎么在 Mac 上公证并做自动更新",
+        "family": "cn_tauri_release",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.75,
+        "matched_concepts": [
+          "app",
+          "mac",
+          "ship_feature"
+        ],
+        "negative_pattern": null
+      },
+      {
+        "prompt": "我的 Tauri app 在 macOS 上点删除按钮没反应，confirm 弹不出来",
+        "family": "cn_tauri_webview",
+        "expected_trigger": true,
+        "predicted_trigger": true,
+        "passed": true,
+        "score": 0.5,
+        "matched_concepts": [
+          "app",
+          "mac"
         ],
         "negative_pattern": null
       }

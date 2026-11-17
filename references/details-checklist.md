@@ -31,6 +31,20 @@ Walk this before every handoff. Items marked ★ are in the template already; ve
 - [ ] ★ About: version, 检查更新, 反馈问题, 使用说明, 源代码, auto-update toggle, QR cards, privacy line, license, correct year.
 - [ ] A way to reset settings and to reveal data files in Finder.
 
+## Window apps with a content column (learned on SubCast)
+
+- [ ] Destructive actions confirm in an in-app dialog (WebView `confirm()` silently returns false).
+- [ ] Resizable panes have min/max widths and remember them; the middle column keeps a minimum so controls don't wrap; narrow panes collapse to icons, never vertical text.
+- [ ] Playback/primary controls dock to the bottom when scrolled out of view; mini player aligns with the content column.
+- [ ] Popovers near the bottom (copy menus in chat) open upward; dialogs fit without scrollbars.
+- [ ] Sticky headers are opaque; scrollbars appear only while scrolling.
+- [ ] Menus that only make sense with data (已下载) appear only when there is data.
+- [ ] Original names stay original (an English podcast keeps its English title); no Chinese product name in the chrome when a logo + English name is the brand.
+- [ ] Theme switches change layout, not only colours; dashes in display text are optically centred or avoided.
+- [ ] Works with zero setup: AI features without a key say so in their own empty state; a free fallback (e.g. Google Translate) exists.
+- [ ] Settings for ordinary users: credential with a "get a key" link → what it is used for (multi-select chips) → test → advanced (collapsed).
+- [ ] Cache/storage page: sizes, open folder, clear.
+
 ## Robustness
 
 - [ ] Logic covered by `--selftest`; it doesn't touch real user data.
@@ -50,3 +64,7 @@ Walk this before every handoff. Items marked ★ are in the template already; ve
 - [ ] THIRD_PARTY_NOTICES complete; licenses for bundled fonts/icons/sounds included.
 - [ ] `./install-local.sh` run so the user is testing the newest build.
 - [ ] Handoff lists what was verified and what was not.
+- [ ] Every new update/onboarding component is actually mounted (grep for its import in the app root).
+- [ ] Public copy (website, README) checked against the code: model sizes, accelerators, platforms.
+- [ ] Delegated website/deploy work: if the goal is "live", the brief authorizes deploy or the main session finishes it.
+- [ ] Don't screenshot the user's whole screen to check the app; capture the app window by id, or ask the user to confirm.
