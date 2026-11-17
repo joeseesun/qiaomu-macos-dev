@@ -40,3 +40,8 @@ Deliberate rejections: Xcode-project flows, `--deep` signing, sandbox-by-default
 - Added `references/tauri.md` (WebView traps, Rust networking, tauri-plugin-updater, notarization script traps, CI, fixed download links, website rsync). Scope widened: Tauri apps shipped on Mac now route here; Electron and plain web apps stay excluded.
 - Generalized lessons promoted: pipefail SIGPIPE (pitfalls), gitleaks/licence lag/public-repo steps (github), content-column window app checklist and handoff checks (details-checklist).
 - Evidence: trigger eval 22/22 including two new Tauri cases. Missing evidence: no new Tauri project generated from this skill yet; Windows/Linux steps are from CI runs, not hardware tests.
+
+## Iteration 1.1.1 (2026-11-17)
+
+- From SubCast 0.2.1: Windows runtime (static CRT, app-local VC++ DLLs for downloaded executables, PE-import CI gate, embedded WebView2 bootstrapper) and YouTube-in-WebView lessons (error codes, yt-dlp mirror with checksums, HLS CORS on WebView2 and the loopback proxy, caption-language inference, publisher Chinese as translation).
+- Evidence: CI run with the PE-import gate green; hls.js 1080p through the proxy in Chromium; real-video caption choices. Missing evidence: no Windows hardware test.
