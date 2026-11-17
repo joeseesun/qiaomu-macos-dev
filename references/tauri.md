@@ -52,6 +52,21 @@ Script traps that aborted a release after Apple had accepted it:
 - Signing secrets go from a user-run script straight into `gh secret set`, never through the agent.
 - Windows without Authenticode shows SmartScreen; say so in the notes ("更多信息 → 仍要运行"). The updater's minisign signature is not code signing.
 
+## Windows runtime (learned from a user's "MSVCP140.dll was not found")
+
+- **Any C++ dependency (whisper.cpp via whisper-rs, etc.) makes the exe import MSVCP140 / VCRUNTIME140**, which PCs without the Visual C++ Redistributable lack: the app dies before any UI. Link the runtime statically with `src-tauri/.cargo/config.toml`: `[target.x86_64-pc-windows-msvc] rustflags = ["-C", "target-feature=+crt-static"]` (the cmake crate follows it for native code).
+- **Third-party executables you download at runtime have their own imports.** CrispASR's Windows build needs MSVCP140, VCRUNTIME140_1 and VCOMP140 (OpenMP). Ship the app-local redistributable DLLs as Windows-only resources (`tauri.windows.conf.json` → `bundle.resources`), copied in CI from the runner's `VC\Redist\MSVC\<ver>\x64\Microsoft.VC*.CRT` and `...OpenMP`, and copy them next to that executable before running it (the exe's folder is searched first).
+- **Gate it in CI**: parse the PE import table of `target/release/<app>.exe` (a 30-line Python script, no Visual Studio tools needed) and fail on `msvcp140.dll`/`vcruntime140*.dll`/`vcomp140.dll`; list the NSIS installer with `7z l` and fail if the DLLs are missing. Check downloaded binaries the same way on the Mac before shipping a feature that runs them.
+- `webviewInstallMode: { type: "embedBootstrapper" }` so the WebView2 install doesn't depend on downloading the bootstrapper.
+- Shortcut labels: write them with ⌘ and replace with `Ctrl+` off macOS in one place (the i18n `t()` output); hide the macOS traffic-light spacer when not on a Mac (`:root:not(.is-mac)`).
+
+## YouTube in a Tauri WebView
+
+- Embeds need an http(s) origin (see `tauri-plugin-localhost` above). Only errors 101/150 mean the owner disallows embedding; 152/153 are player/referrer problems on your side; say which.
+- The fallback is yt-dlp. Prepare it when a video page opens (first download is ~35 MB), show download progress and the step being waited on, cap the whole wait, and always offer "Open on YouTube". Mirror the binary on your own server with SHA-256 verification against the release's `SHA2-256SUMS` (users in mainland China often can't reach GitHub); keep the mirror outside the website root so site deploys can't delete it.
+- WKWebView plays YouTube HLS natively. **WebView2 can't, and hls.js can't read YouTube's HLS because playlists and segments carry no CORS header** (`manifestLoadError`, code 0). A progressive MP4 (format 18) plays anywhere but is 360p. For HD: a loopback proxy on 127.0.0.1 with a random path token and a YouTube-hosts allowlist adds `Access-Control-Allow-Origin` and rewrites playlist URIs (entry lines and `URI="…"`); verified 1080p in Chromium hls.js. Fall back to the MP4 on any fatal hls.js error.
+- Caption tracks: when a Chinese video also has uploaded English captions, "prefer English when the spoken language is unknown" picks English. Infer the spoken language from the title's script (Han → zh, kana → ja, hangul → ko) before falling back. A foreign video's uploaded Chinese track is better than machine translation: align it to the original segments by midpoint and use it as the translation, machine-translating only the gaps. `&tlang=` (YouTube's own auto-translation) returned 429 with a bot page: not usable as a fallback.
+
 ## Downloads and the website
 
 - Fixed "always latest" links: `https://github.com/<o>/<r>/releases/latest/download/<App>-mac-apple-silicon.dmg` (upload stable-named copies to every release) and, on your own server, `/download/latest/<stable name>` symlinks to `/download/<version>/…` (`ln -sfn`). Curl every link for 200 after publishing.
@@ -60,4 +75,4 @@ Script traps that aborted a release after Apple had accepted it:
 
 ## Before calling it shipped
 
-Mac DMGs stapled and `spctl`-checked (also after adding a quarantine attribute), four updater signatures verified, `latest.json` version correct on the server and on GitHub, fixed links 200, an in-app update from the previous version actually done, Windows/Linux listed as "CI-built, not tested on hardware" unless they were.
+Windows exe import check green and the installer carrying its DLLs, Mac DMGs stapled and `spctl`-checked (also after adding a quarantine attribute), four updater signatures verified, `latest.json` version correct on the server and on GitHub, fixed links 200, an in-app update from the previous version actually done, Windows/Linux listed as "CI-built, not tested on hardware" unless they were.
