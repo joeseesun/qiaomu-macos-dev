@@ -33,3 +33,10 @@ Deliberate rejections: Xcode-project flows, `--deep` signing, sandbox-by-default
 - Run a fresh session with only "做一个 X 的 Mac 小工具" and record where it needed help.
 - Add a hero-image generator script for READMEs.
 - Fold lessons from each new app into `references/pitfalls.md` and bump the version.
+
+## Iteration 1.1.0 (2026-11-16)
+
+- Source: SubCast / 声渡 (Tauri 2 + React + Rust), shipped 0.2.0 notarized for Mac arm64/x64 plus CI builds for Windows/Linux; lessons distilled from its Claude Code and Factory sessions.
+- Added `references/tauri.md` (WebView traps, Rust networking, tauri-plugin-updater, notarization script traps, CI, fixed download links, website rsync). Scope widened: Tauri apps shipped on Mac now route here; Electron and plain web apps stay excluded.
+- Generalized lessons promoted: pipefail SIGPIPE (pitfalls), gitleaks/licence lag/public-repo steps (github), content-column window app checklist and handoff checks (details-checklist).
+- Evidence: trigger eval 22/22 including two new Tauri cases. Missing evidence: no new Tauri project generated from this skill yet; Windows/Linux steps are from CI runs, not hardware tests.

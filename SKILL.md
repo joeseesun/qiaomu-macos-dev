@@ -1,8 +1,8 @@
 ---
 name: qiaomu-macos-dev
 description: |
-  One-sentence, one-shot development of polished native macOS apps (SwiftUI + AppKit, SwiftPM, no Xcode project): menu bar apps with a hotkey panel or normal Dock/window apps, scaffolded with an Icon Composer icon from Lucide, a settings window with About (version, update check, feedback, follow/tip QR), Sparkle auto-update, Vercel-style UI verified by offscreen snapshots, Developer ID signing, notarization, a designed DMG, a GitHub repo (private by default, ask before public) with an illustrated product-page README, PR flow and GitHub Releases with an appcast. Default skill for any macOS app work by 乔木: "做一个 mac 软件", "开发 macOS app", "菜单栏工具", "做个 Mac 小工具", "加自动更新", "做设置页/关于页", "设计 app 图标", "公证/打包 DMG", "发布 mac app 到 GitHub", plus debugging focus, hotkey, TCC permission, IME and Sparkle issues in such apps.
-  Excludes: iOS/iPadOS/watchOS apps, Electron/Tauri/web apps, browser extensions and native-messaging helpers (use qiaomu-dev-skill), Obsidian plugins, .pkg installers for helpers, and generic Swift questions with no app to build.
+  One-sentence, one-shot development of polished native macOS apps (SwiftUI + AppKit, SwiftPM, no Xcode project): menu bar apps with a hotkey panel or normal Dock/window apps, scaffolded with an Icon Composer icon from Lucide, a settings window with About (version, update check, feedback, follow/tip QR), Sparkle auto-update, Vercel-style UI verified by offscreen snapshots, Developer ID signing, notarization, a designed DMG, a GitHub repo (private by default, ask before public) with an illustrated product-page README, PR flow and GitHub Releases with an appcast. Default skill for any macOS app work by 乔木: "做一个 mac 软件", "开发 macOS app", "菜单栏工具", "做个 Mac 小工具", "加自动更新", "做设置页/关于页", "设计 app 图标", "公证/打包 DMG", "发布 mac app 到 GitHub", plus debugging focus, hotkey, TCC permission, IME and Sparkle issues in such apps. Also Tauri desktop apps shipped on Mac (WKWebView pitfalls, notarization, tauri updater, Windows/Linux CI, fixed download links) via references/tauri.md.
+  Excludes: iOS/iPadOS/watchOS apps, Electron and plain web apps, browser extensions and native-messaging helpers (use qiaomu-dev-skill), Obsidian plugins, .pkg installers for helpers, and generic Swift questions with no app to build.
 ---
 
 # Qiaomu macOS Dev
@@ -13,6 +13,7 @@ Turn one sentence into a shipped, notarized, auto-updating Mac app that looks de
 
 - New app → run the generator, then the [One-Shot Workflow](references/one-shot-workflow.md). Do not hand-write the skeleton.
 - Existing app → read only the reference for the task (table below) and keep the project's conventions.
+- Tauri app → [Tauri](references/tauri.md) replaces the Swift generator and template; the taste, checklist, signing, GitHub and release rules still apply.
 - Reply in Chinese; code, commands and identifiers stay English.
 - Ask only what changes the build: the app's job in one line, Chinese + English name, menu bar vs window (infer when obvious). Everything else gets a good default and is listed in the handoff.
 
@@ -67,6 +68,7 @@ Before handing over, walk the [Details Checklist](references/details-checklist.m
 | Signing, notarization, DMG, versioning | [release](references/release.md) |
 | Repo, README, About/topics, PRs, Releases | [github](references/github.md) |
 | Known bugs and their fixes | [pitfalls](references/pitfalls.md) |
+| Tauri apps: WebView traps, updater, notarize, CI, download links | [tauri](references/tauri.md) |
 | The things users don't think to ask for | [details-checklist](references/details-checklist.md) |
 
 Copyright (c) 向阳乔木 · X https://x.com/vista8 · GitHub https://github.com/joeseesun/
